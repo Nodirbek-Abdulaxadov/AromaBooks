@@ -1,0 +1,125 @@
+﻿@model EditBookViewModel
+
+<div class="container">
+    <div class="card my-4">
+        <h5 class="card-header">Edit Book</h5>
+        <div class="card-body">
+            <div>
+                <form asp-area="admin"
+                      asp-controller="book"
+                      asp-action="edit"
+                      method="post"
+                      enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="title" class="form-label mt-2">Title</label>
+                            <input asp-for="Title"
+                                   type="text"
+                                   class="form-control"
+                                   id="title" />
+                            <span asp-validation-for="Title" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Author" class="form-label mt-2">Author</label>
+                            <input asp-for="Author"
+                                   type="text"
+                                   class="form-control"
+                                   id="Author" />
+                            <span asp-validation-for="Author" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="PageCount" class="form-label mt-2">PageCount</label>
+                            <input asp-for="PageCount"
+                                   type="number"
+                                   class="form-control"
+                                   id="PageCount" />
+                            <span asp-validation-for="PageCount" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Price" class="form-label mt-2">Price</label>
+                            <input asp-for="Price"
+                                   type="number"
+                                   class="form-control"
+                                   id="Price" />
+                            <span asp-validation-for="Price" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="PublishedYear" class="form-label mt-2">Published Year</label>
+                            <input asp-for="PublishedYear"
+                                   type="number"
+                                   class="form-control"
+                                   id="PublishedYear" />
+                            <span asp-validation-for="PublishedYear" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="CategoryId" class="form-label mt-2">Category</label>
+                            <select asp-for="CategoryId" class="form-select" aria-label="Default select example">
+                                <option selected disabled>Open this categories menu</option>
+                                @foreach (var c in Model.Categories)
+                                {
+                                    <option value="@c.Id">@c.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Title" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Description" class="form-label mt-2">Description</label>
+                            <textarea asp-for="Description"
+                                      type="text"
+                                      class="form-control"
+                                      id="Description" rows="4">
+                             </textarea>
+                            <span asp-validation-for="Description" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-center lnr-text-align-center mt-4">
+
+                            @{
+                                string imageSource = !string.IsNullOrEmpty(Model.ImageUrl) ? $"~/uploads/{@Model.ImageUrl}" : "~/uploads/default.jpg";
+                            }
+                            <input type="hidden" asp-for="ImageUrl" value="@Model.ImageUrl"/>
+                           
+                            
+                            <label for="image" class="form-label mt-2 text-center">  <img src="@imageSource" width="100px" asp-append-version="true" /> <br /> Image file</label>
+                            <div class="container  py-2 mt-5">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <input asp-for="File" accept="image/*" class="form-control" type="file" id="formFile">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="File" id="defaultFormControlHelp" class="text-danger form-text">
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-center mt-4">
+                        <a asp-area="admin"
+                           asp-controller="book"
+                           asp-action="index"
+                           class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success ms-4">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
