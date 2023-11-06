@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="~/vendors/owl-carousel/owl.carousel.min.css">
 
     <link rel="stylesheet" href="~/css/style.css">
+    <style>
+        .auth a {
+            padding: 7px 25px;
+            border-radius: 25px;
+        }
+    </style>
 </head>
 <body>
     <!--================ Start Header Menu Area =================-->
@@ -40,7 +46,16 @@
                         <ul class="nav-shop">
                             <li class="nav-item"><button><i class="ti-search"></i></button></li>
                             <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
-                            <li class="nav-item"><a class="button button-header" href="~/#">Buy Now</a></li>
+                            <li class="nav-item">
+                                <div class="auth">
+                                    <a class="btn btn-outline-success" asp-area="identity"
+                                       asp-controller="auth"
+                                       asp-action="register">SignUp</a>
+                                    <a class="btn btn-outline-primary" asp-area="identity"
+                                       asp-controller="auth"
+                                       asp-action="login">SignIn</a>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

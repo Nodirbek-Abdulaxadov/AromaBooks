@@ -135,10 +135,10 @@ public class BookController : Controller
         if (ModelState.IsValid)
         {
             string image = viewModel.ImageUrl;
-            if (viewModel.FileName !=null)
+            if (viewModel.File != null)
             {
                 _fileInterface.Delete(image);
-                image = _fileInterface.Save(viewModel.FileName);
+                image = _fileInterface.Save(viewModel.File);
                 Book book = new()
                 {
                     Id = viewModel.Id,
@@ -153,12 +153,9 @@ public class BookController : Controller
                     Category = null
                 };
                 await _books.UpdateAsync(book);
-                _toastNotification.AddSuccessToastMessage("Seccessfully update");
-                return RedirectToAction("index");
-
             }
-
-
+            _toastNotification.AddSuccessToastMessage("Seccessfully update");
+            return RedirectToAction("index");
         }
 
         viewModel.Categories = await _categories.GetAllAsync();

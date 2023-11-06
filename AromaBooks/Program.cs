@@ -1,7 +1,10 @@
+using AromaBooks;
 using AromaBooks.Areas.Admin.Services;
 using AromaBooks.Data;
 using AromaBooks.Data.Interfaces;
+using AromaBooks.Data.Models;
 using AromaBooks.Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 
@@ -21,9 +24,14 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddDbContext<AromaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalSqlServer")));
 
+builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<AromaDbContext>()
+        .AddDefaultTokenProviders();
+
 builder.Services.AddTransient<ICategoryInterface , CategoryServices>();
 builder.Services.AddTransient<IBookInterface,  BookService>();
 builder.Services.AddTransient<IFileInterface, FileService>();
+
 
 
 
@@ -48,13 +56,12 @@ app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Category}/{action=Index}/{id?}"
     );
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Book}/{action=Index}/{id?}"
-    );
+
 app.UseNToastNotify();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.SeedRolesToDatabase().Wait();
 app.Run();

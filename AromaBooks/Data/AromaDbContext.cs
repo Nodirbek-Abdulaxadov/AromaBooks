@@ -1,9 +1,10 @@
 ﻿using AromaBooks.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AromaBooks.Data;
 
-public class AromaDbContext:DbContext
+public class AromaDbContext : IdentityDbContext<User>
 {
     public AromaDbContext(DbContextOptions<AromaDbContext>options)
         : base(options){ }
@@ -18,5 +19,7 @@ public class AromaDbContext:DbContext
             .WithOne(b => b.Category)
             .HasForeignKey(b => b.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        base.OnModelCreating(modelBuilder);
     }
 }
