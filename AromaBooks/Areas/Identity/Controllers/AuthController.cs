@@ -11,16 +11,46 @@ public class AuthController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly SignInManager<User> _signInManager;
 
     public AuthController(UserManager<User> userManager,
-                          IPasswordHasher<User> passwordHasher)
+                          IPasswordHasher<User> passwordHasher,
+                          SignInManager<User> signInManager)
     {
         _userManager = userManager;
         _passwordHasher = passwordHasher;
+        _signInManager = signInManager;
     }
 
     public IActionResult Login()
     {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel viewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = _userManager.Users
+                    .FirstOrDefault(u => u.UserName.EndsWith(viewModel.PhoneNumber.Replace("+", "")));
+            if (user != null)
+            {
+                var result = await _signInManager
+                    .PasswordSignInAsync(user.UserName, 
+                                         viewModel.Password, 
+                                         viewModel.RememberMe,
+                                         false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index", "home", new { area = "" });
+                }
+            }
+            ModelState.AddModelError("Password", "Incorrect phoneNumber or password!");
+            return View();
+        }
+
         return View();
     }
 
@@ -71,5 +101,11 @@ public class AuthController : Controller
         };
 
         return View(viewModel);
+    }
+
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("index", "home", new { area = "" });
     }
 }

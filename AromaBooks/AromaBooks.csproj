@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\admin\" />
-    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ItemGroup>
