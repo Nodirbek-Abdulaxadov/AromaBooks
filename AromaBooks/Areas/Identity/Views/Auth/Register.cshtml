@@ -1,4 +1,6 @@
-﻿<!--================Login Box Area =================-->
+﻿@model RegisterViewModel
+
+<!--================Login Box Area =================-->
 <section class="login_box_area section-margin">
     <div class="container">
         <div class="row">
@@ -7,31 +9,41 @@
                     <div class="hover">
                         <h4>Already have an account?</h4>
                         <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                        <a class="button button-account" href="login.html">Login Now</a>
+                        <a class="button button-account" 
+                        asp-area="identity"
+                        asp-controller="auth"
+                        asp-action="login">Login Now</a>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="login_form_inner register_form_inner">
                     <h3>Create an account</h3>
-                    <form class="row login_form" action="#/" id="register_form">
+                    <form asp-area="identity" asp-controller="auth"
+                          asp-action="register"  class="row login_form" method="post" id="register_form">
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'">
+                            <input asp-for="FirstName" type="text" class="form-control" id="fname" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'">
+                            <input asp-for="LastName" type="text" class="form-control" id="lname" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="address" name="address" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'">
+                            <input asp-for="Address" type="text" class="form-control" id="address" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'">
+                            <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="tel" class="form-control" id="tel" name="tel" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'">
+                            <input asp-for="PhoneNumber" type="tel" class="form-control" id="tel" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+                            <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
+                            <span id="cpassword" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="button button-register w-100">Register</button>
@@ -43,3 +55,20 @@
     </div>
 </section>
 <!--================End Login Box Area =================-->
+
+<script>
+    document.getElementById('confirmPassword')
+        .addEventListener('input', CheckConfirmPassword);
+
+    function CheckConfirmPassword() {
+        var password = document.getElementById('password').value;
+        var cpassword = document.getElementById('confirmPassword').value;
+        var pvalid = document.getElementById('cpassword');
+
+        if (password !== cpassword) {
+            pvalid.innerText = "Password didn't match!";
+        } else {
+            pvalid.innerText = '';
+        }
+    }
+</script>

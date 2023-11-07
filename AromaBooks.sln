@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AromaBooks", "AromaBooks\AromaBooks.csproj", "{130E4D5E-AF0C-4DFE-8187-CB0E883F2789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AromaBooks", "AromaBooks\AromaBooks.csproj", "{130E4D5E-AF0C-4DFE-8187-CB0E883F2789}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{660387B5-AF68-4B36-A074-29DD57C9EBE1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messager", "Messager\Messager.csproj", "{77DB42FF-E55C-4037-AF2C-36C5D6CD29CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{130E4D5E-AF0C-4DFE-8187-CB0E883F2789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{130E4D5E-AF0C-4DFE-8187-CB0E883F2789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{130E4D5E-AF0C-4DFE-8187-CB0E883F2789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660387B5-AF68-4B36-A074-29DD57C9EBE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660387B5-AF68-4B36-A074-29DD57C9EBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660387B5-AF68-4B36-A074-29DD57C9EBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660387B5-AF68-4B36-A074-29DD57C9EBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77DB42FF-E55C-4037-AF2C-36C5D6CD29CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77DB42FF-E55C-4037-AF2C-36C5D6CD29CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77DB42FF-E55C-4037-AF2C-36C5D6CD29CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77DB42FF-E55C-4037-AF2C-36C5D6CD29CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

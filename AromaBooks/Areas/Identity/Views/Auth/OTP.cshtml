@@ -1,0 +1,42 @@
+﻿@model OtpViewModel
+
+<div class="container">
+    <div style="width: 400px; margin: 100px auto;">
+        <div class="card">
+            <div class="card-header">
+                <h2>Enter verification code</h2>
+            </div>
+            <div class="card-body">
+                <div>
+                    <input type="hidden" id="codehash" asp-for="CodeHash" value="@Model.CodeHash"/>
+                    <div class="col-md-12 form-group">
+                        <input required asp-for="Code" type="text" class="form-control" id="code" placeholder="Verification Code" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Verification Code'">
+                        <span id="error" asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a onclick="windows.location.history.back();" class="me-2 btn btn-secondary text-white">Cancel</a>
+                        <button onclick="check();" class="ms-2 btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var hashed = document.getElementById('codehash').value - 12345;
+    var error = document.getElementById('error');
+
+    function check() {
+        var code = document.getElementById('code').value;
+        console.log('hashed' + hashed);
+        console.log('code' + code);
+        if (code == hashed) {
+            window.location.href = '/identity/auth/login';
+        }
+        else {
+            error.innerText = 'Incorrect verification code!'
+        }
+    }
+
+</script>

@@ -29,9 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Identity\ViewModels\" />
     <Folder Include="wwwroot\admin\" />
     <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Messager\Messager.csproj" />
   </ItemGroup>
 
 </Project>

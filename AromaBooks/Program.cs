@@ -24,7 +24,15 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddDbContext<AromaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalSqlServer")));
 
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+        options.Password = new PasswordOptions
+        {
+            RequireDigit = true,
+            RequiredLength = 8,
+            RequireLowercase = true,
+            RequireUppercase = true,
+            RequireNonAlphanumeric = true,
+        })
         .AddEntityFrameworkStores<AromaDbContext>()
         .AddDefaultTokenProviders();
 
@@ -63,5 +71,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.SeedRolesToDatabase().Wait();
+//app.SeedRolesToDatabase().Wait();
 app.Run();
