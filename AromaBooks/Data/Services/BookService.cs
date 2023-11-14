@@ -54,7 +54,7 @@ public class BookService:IBookInterface
         {
             books = books.Where(b => b.Title
                                       .ToLower()
-                                        .Contains(filterModel.searchText
+                                      .Contains(filterModel.searchText
                                                                .ToLower()));
         }
         switch (filterModel.sortType)
@@ -88,11 +88,11 @@ public class BookService:IBookInterface
                 {
                     if (filterModel.ascendingType == AscendingType.Ascending)
                     {
-                        books = books.OrderBy(b => b.sellsCount);
+                        books = books.OrderBy(b => b.SellsCount);
                     }
                     else
                     {
-                        books = books.OrderByDescending(b => b.sellsCount);
+                        books = books.OrderByDescending(b => b.SellsCount);
                     }
                 }
                 break;
@@ -107,7 +107,7 @@ public class BookService:IBookInterface
           return           await _dbContext.Books
                             .Include(b => b.Category)
                           .OrderByDescending(b => b.Id)
-                          .Take(5)
+                          .Take(12)
                            .ToListAsync();
     }
 
@@ -116,7 +116,7 @@ public class BookService:IBookInterface
                return     await _dbContext.Books
                           .Include(b => b.Category)
                           .OrderByDescending(b => b.Id)
-                          .Take(5)
+                          .Take(4)
                            .ToListAsync();
     }
 

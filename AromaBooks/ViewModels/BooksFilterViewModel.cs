@@ -6,4 +6,5 @@ public class BooksFilterViewModel
 {
     public List<Book> Books = new();
     public FilterModel FilterModel = new();
+    public List<Category> Categories = new();
 }

@@ -1,10 +1,8 @@
 ﻿using AromaBooks.Areas.Admin.Services;
 using AromaBooks.Areas.Admin.ViewModels;
-using AromaBooks.Data;
 using AromaBooks.Data.Interfaces;
 using AromaBooks.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NToastNotify;
 
 
@@ -61,21 +59,25 @@ public class BookController : Controller
         if(ModelState.IsValid)
         {
             string imageURL = _fileInterface.Save(viewModel.FileName);
+            var categoryIds = (await _categories.GetAllAsync()).Select(i => i.Id).ToList();
 
-            Book newBook = new()
+            for (int i = 0; i < 100; i++)
             {
-                Title = viewModel.Title,
-                Author = viewModel.Author,
-                Price = viewModel.Price,
-                Description = viewModel.Description,
-                PageCount = viewModel.PageCount,
-                PublishedYear = viewModel.PublishedYear,
-                CategoryId = viewModel.CategoryId,
-                ImageUrl = imageURL,
-                Category = null
-            };
+                Book newBook = new()
+                {
+                    Title = viewModel.Title + i,
+                    Author = viewModel.Author + i,
+                    Price = viewModel.Price + i,
+                    Description = viewModel.Description + i,
+                    PageCount = viewModel.PageCount + i,
+                    PublishedYear = viewModel.PublishedYear + i,
+                    CategoryId = RandomId(categoryIds),
+                    ImageUrl = imageURL,
+                    Category = null
+                };
 
-            await _books.AddAsync(newBook);
+                await _books.AddAsync(newBook);
+            }
 
             return RedirectToAction("Index");
         }
@@ -83,6 +85,12 @@ public class BookController : Controller
         viewModel.Categories = list;
 		return View(viewModel);
     }
+
+    private int RandomId(List<int> categoryIds)
+    {
+        Random random = new();
+        return categoryIds[random.Next(0, categoryIds.Count)];
+    }   
 
     public async Task<IActionResult> Delete(int id)
     {

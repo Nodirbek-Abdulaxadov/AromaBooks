@@ -18,7 +18,7 @@ builder.Services.AddControllersWithViews()
                     PositionClass = ToastPositions.TopRight,
                     TimeOut = 3000
                 });
-            
+
 
 
 builder.Services.AddDbContext<AromaDbContext>(options =>
@@ -36,9 +36,16 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
         .AddEntityFrameworkStores<AromaDbContext>()
         .AddDefaultTokenProviders();
 
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+	options.LoginPath = "/Identity/Auth/Login";
+});
+
 builder.Services.AddTransient<ICategoryInterface , CategoryServices>();
 builder.Services.AddTransient<IBookInterface,  BookService>();
 builder.Services.AddTransient<IFileInterface, FileService>();
+builder.Services.AddTransient<ICommentInterface, CommentService>();
 
 
 

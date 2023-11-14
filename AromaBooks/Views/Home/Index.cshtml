@@ -50,7 +50,7 @@
                         </div>
                         <div class="card-body">
                             <p>@item.Category.Name</p>
-                            <h4 class="card-product__title"><a href="single-product.html">@item.Title</a></h4>
+                            <h4 class="card-product__title"><a asp-controller="home" asp-action="bookdetails" asp-route-id="@item.Id">@item.Title</a></h4>
                             @{
                                 var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("uz-UZ");
                                 var price = string.Format(formatMoney, "{0:c}", @item.Price);
@@ -107,7 +107,7 @@
                     </div>
                     <div class="card-body">
                         <p>@item.Category.Name</p>
-                        <h4 class="card-product__title"><a href="single-product.html">@item.Title</a></h4>
+                        <h4 class="card-product__title"><a asp-controller="home" asp-action="bookdetails" asp-route-id="@item.Id">@item.Title</a></h4>
                         <p class="card-product__price">@price</p>
                     </div>
                 </div>

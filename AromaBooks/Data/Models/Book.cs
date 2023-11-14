@@ -24,7 +24,9 @@ public class Book:BaseModel
     public int PublishedYear { get; set; }
 
     public string ImageUrl { get; set; }= string.Empty;
-    public int sellsCount { get; set; }   
+    public int SellsCount { get; set; }
+    public int Quantity { get; set; }
+    public double OveralRate { get; set; }
 
     [Required]
     public int CategoryId { get; set; }
