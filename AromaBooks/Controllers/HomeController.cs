@@ -1,8 +1,10 @@
 ﻿using AromaBooks.Data.Interfaces;
 using AromaBooks.Data.Models;
 using AromaBooks.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AromaBooks.Controllers;
 
@@ -12,17 +14,20 @@ public class HomeController : Controller
     private readonly IBookInterface _bookInterface;
 	private readonly ICommentInterface _commentInterface;
 	private readonly UserManager<User> _userManager;
+    private readonly ICartInterface _cartInterface;
 
-	public HomeController(ICategoryInterface categoryInterface,
+    public HomeController(ICategoryInterface categoryInterface,
                            IBookInterface bookInterface,
                            ICommentInterface commentInterface,
-                           UserManager<User> userManager)
+                           UserManager<User> userManager,
+                           ICartInterface cartInterface)
     {
         _categoryInterface = categoryInterface;
         _bookInterface = bookInterface;
 		_commentInterface = commentInterface;
 		_userManager = userManager;
-	}
+        _cartInterface = cartInterface;
+    }
     public async Task<IActionResult> Index()
     {
         HomeViewModel viewModel = new HomeViewModel()
@@ -30,6 +35,13 @@ public class HomeController : Controller
             TrendingBooks = await _bookInterface.Get4TrendingBooksAsync(),
             BestSellsBooks = await _bookInterface.Get10BestSellsBooksAsync(),
         };
+
+        var user = await _userManager.GetUserAsync(HttpContext.User);
+        if (user != null)
+        {
+            var cartItems = await _cartInterface.GetCartsAsync(user.Id);
+            ViewBag.count = cartItems.Count;
+        }
         return View(viewModel);
     }
 
@@ -80,6 +92,30 @@ public class HomeController : Controller
             Comments = comments,
             UserId = user?.Id ?? string.Empty,
 		};
-		return View(viewModel);
+        if (user != null)
+        {
+            var cartItems = await _cartInterface.GetCartsAsync(user.Id);
+            ViewBag.count = cartItems.Count;
+        }
+        return View(viewModel);
 	}
+
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> AddToCart(BookDetailViewModel viewModel)
+    {
+        var user = await _userManager.GetUserAsync(HttpContext.User);
+        await _cartInterface.AddToCartAsync(user.Id, viewModel.BookId, viewModel.Quantity);
+        return RedirectToAction("BookDetails", "Home", new { id = viewModel.BookId });
+    }
+
+    [Authorize]
+    public async Task<IActionResult> Cart()
+    {
+        var user = await _userManager.GetUserAsync(HttpContext.User); 
+        var cartItems = await _cartInterface.GetCartsAsync(user.Id);
+        ViewBag.count = cartItems.Count;
+        return View(cartItems);
+    }
 }

@@ -46,7 +46,7 @@ builder.Services.AddTransient<ICategoryInterface , CategoryServices>();
 builder.Services.AddTransient<IBookInterface,  BookService>();
 builder.Services.AddTransient<IFileInterface, FileService>();
 builder.Services.AddTransient<ICommentInterface, CommentService>();
-
+builder.Services.AddTransient<ICartInterface, CartService>();
 
 
 

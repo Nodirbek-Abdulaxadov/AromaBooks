@@ -12,4 +12,6 @@ public class BookDetailViewModel
     public bool IsReply { get; set; }
     public int CommentId { get; set; }
     public string UserId { get; set; } = string.Empty;
+    public int count { get; set; }
+    public int Quantity { get; set; }
 }
